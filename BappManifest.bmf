@@ -1,0 +1,13 @@
+Uuid: 1c19036ead3241b789cc8fcc45387fa7
+ExtensionType: 1
+Name: Magic Variables
+RepoName: burp-magicvars
+ScreenVersion: 1.4.7
+SerialVersion: 1
+MinPlatformVersion: 0
+ProOnly: False
+Author: softwaresecured
+ShortDescription: The Magic Variables extension provides useful traffic replacements like random integers, UUIDs, and strings, allowing users to correlate sinks with their sources.
+EntryPoint: ./target_repo.jar
+BuildCommand: ./gradlew jar
+SupportedProducts: Pro, Community
