@@ -1,29 +1,36 @@
-<p>Magic Variables is a Burp extension that provides helpful replacements in web traffic, such as random integers, random UUIDs, and random strings. This allows penetration testers to easily correlate data sinks with their sources. The extension is particularly useful for dynamic scans where each request may require a unique value.</p>
+<p>Magic Variables is a Burp Suite extension that enables automated substitution of placeholders in HTTP traffic with dynamic, static, or predefined values. This helps penetration testers track data flow, generate unique payloads per request, and simplify complex injection scenarios without manual intervention.</p>
 
 <h2>Features</h2>
-<p>This extension supports three types of variables:</p>
 <ul>
-    <li><strong>Static Variables:</strong> These are user-defined variables that are simple substitutions. For example, <code class=InlineCode>__SIMPLE_XSS__</code> could be mapped to a string such as <code class=InlineCode>&lt;script&gt;alert(1)&lt;/script&gt;</code>.</li>
-    <li><strong>Dynamic Variables:</strong> These are user-defined variables that can be used to read values from responses and insert them in requests. They are useful for session management scripts that require path parameters.</li>
-    <li><strong>Built-in Variables:</strong> These are pre-defined variables that perform common actions. Examples include <code class=InlineCode>__RINT__</code> for a random 8 digit integer, <code class=InlineCode>__UUID__</code> for a random UUID, and <code class=InlineCode>__OOB__</code> for a collaborator payload.</li>
+  <li>Replace user-defined placeholders in requests with corresponding values.</li>
+  <li>Define <b>Static Variables</b> for simple, fixed string substitutions.</li>
+  <li>Use <b>Dynamic Variables</b> to extract values from responses and inject them into future requests.</li>
+  <li>Access a wide set of <b>Built-in Variables</b> for generating:
+    <ul>
+      <li>Random integers, UUIDs, and strings</li>
+      <li>Timestamp values</li>
+      <li>Payloads for XSS, SSTI, and XXE testing</li>
+      <li>Collaborator-based OOB payloads</li>
+    </ul>
+  </li>
+  <li>Scope-aware: only operates on in-scope requests.</li>
+  <li>Customizable variable marker syntax to avoid conflicts with target applications.</li>
 </ul>
-<p>Note that variables with the prefix NE are never-ending, meaning a new value will be generated each time the variable is invoked.</p>
 
 <h2>Usage</h2>
-<p>Here are some examples of how to use the Magic Variables extension:</p>
-<ul>
-    <li>Use a dynamic variable to read a value from a response with <code class=InlineCode>sessionid=([^]+)</code> and write it to a request with <code class=InlineCode>/session/([a-f0-9]+)/profile</code>.</li>
-    <li>Quickly include a collaborator payload by using the built-in variable <code class=InlineCode>__OOB__</code>.</li>
-    <li>Create a static variable called XSS1 with the value <code class=InlineCode>&lt;svg/onload=alert(__RINT__)&gt;</code>. When you include <code class=InlineCode>__XSS1__</code> in a request, it will be automatically replaced with the appropriately constructed SVG payload.</li>
-</ul>
-<p>By default, the variable marker is <code class=InlineCode>__</code>, but you can configure this within the extension if it conflicts with the application youre testing. Please note that Magic Variables will only operate on requests that are in scope.</p>
+<ol>
+  <li>Open the Magic Variables tab to define static and dynamic variables.</li>
+  <li>Static variables require a name and replacement value. Use the pattern <code class="InlineCode">__VARNAME__</code> in requests.</li>
+  <li>Dynamic variables require a regex pattern to extract values from responses and a target pattern for where to substitute them in future requests.</li>
+  <li>Built-in variables can be used without definition; insert them directly into requests using <code class="InlineCode">__BUILTINVARNAME__</code>.</li>
+  <li>Use <code class="InlineCode">NE</code> variants (e.g. <code class="InlineCode">__NEUUID__</code>) to generate fresh values on every request.</li>
+</ol>
 
-<h2>Frequently Asked Questions</h2>
-<p><strong>Q: Why are replacements not happening?</strong><br>
-   A: Check the enabled sources at the bottom of the UI and make sure the source in question is enabled.</p>
-<p><strong>Q: Why arent I seeing the replacements in my proxy history?</strong><br>
-   A: Select a request and click Edited request.</p>
-<p><strong>Q: I sent a request using the repeater but nothing changed?</strong><br>
-   A: Check the Logging tab.</p>
-<p><strong>Q: The <code class=InlineCode>__</code> sequence conflicts with syntax used in the target Im testing, how can I fix this?</strong><br>
-   A: Change the left and right variable markers in the bottom left of the UI.</p>
+<h2>Examples</h2>
+<ul>
+  <li><strong>Static Variable:</strong> Define <code class="InlineCode">XSS1</code> with value <code class="InlineCode">&lt;svg/onload=alert(1)&gt;</code>. Using <code class="InlineCode">__XSS1__</code> in a request inserts the payload.</li>
+  <li><strong>Dynamic Variable:</strong> Extract <code class="InlineCode">sessionid</code> from a response using regex <code class="InlineCode">sessionid='([^']+)'</code> and inject it into paths matching <code class="InlineCode">/session/([a-f0-9]+)/profile</code>.</li>
+  <li><strong>Built-in Variable:</strong> Add <code class="InlineCode">__UUID__</code> to generate a static UUID, or <code class="InlineCode">__NEUUID__</code> for a new UUID on each request.</li>
+  <li><strong>OOB Testing:</strong> Use <code class="InlineCode">__OOB__</code> in requests to automatically include a Burp Collaborator payload.</li>
+  <li><strong>Polyglot XSS:</strong> Insert <code class="InlineCode">__XSSPG__</code> to test a wide range of XSS contexts.</li>
+</ul>
