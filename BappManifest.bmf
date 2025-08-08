@@ -2,8 +2,8 @@ Uuid: 1c19036ead3241b789cc8fcc45387fa7
 ExtensionType: 1
 Name: Magic Variables
 RepoName: magic-variables
-ScreenVersion: 1.4.16
-SerialVersion: 2
+ScreenVersion: 1.4.18
+SerialVersion: 3
 MinPlatformVersion: 16
 ProOnly: False
 Author: Software Secured
