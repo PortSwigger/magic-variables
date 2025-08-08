@@ -18,13 +18,8 @@ import burp_magicvars.ui.MagicVarsTab;
 import burp_magicvars.util.Logger;
 import burp_magicvars.view.MagicVarsConfigView;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -55,9 +50,12 @@ public class BurpMagicVars implements BurpExtension, ExtensionUnloadingHandler {
             model.load(config);
         }
         api.extension().registerUnloadingHandler(this);
-        UpdateChecker updateChecker = new UpdateChecker();
-        updateCheckerThread = new Thread(updateChecker);
-        updateCheckerThread.start();
+        // Disabled for bappstore
+        if ( !api.extension().isBapp() ) {
+            UpdateChecker updateChecker = new UpdateChecker();
+            updateCheckerThread = new Thread(updateChecker);
+            updateCheckerThread.start();
+        }
 
     }
 
