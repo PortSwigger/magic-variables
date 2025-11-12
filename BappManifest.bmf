@@ -9,5 +9,5 @@ ProOnly: False
 Author: Software Secured
 ShortDescription: Provides helpful replacements in traffic such as random integers, random UUIDs and random strings.
 EntryPoint: target_repo.jar
-BuildCommand: ./gradlew jar
+BuildCommand: ./gradlew build
 SupportedProducts: Pro, Community
