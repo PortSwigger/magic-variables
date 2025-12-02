@@ -3,7 +3,7 @@ ExtensionType: 1
 Name: Magic Variables
 RepoName: magic-variables
 ScreenVersion: 1.4.19
-SerialVersion: 4
+SerialVersion: 5
 MinPlatformVersion: 16
 ProOnly: False
 Author: Software Secured
